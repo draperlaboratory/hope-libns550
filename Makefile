@@ -32,7 +32,7 @@ OBJ := $(COMMON_OBJ) $(UART_OBJ)
 CFLAGS += -nostartfiles \
           -ffunction-sections \
 		  -fno-builtin-printf
-ifneq ($(findstring rv64,$(ARCH),rv64),)
+ifneq ($(findstring rv64,$(ARCH)),)
 ARFLAGS=--target=elf64-littleriscv
 else
 ARFLAGS=--target=elf32-littleriscv
