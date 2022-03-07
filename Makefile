@@ -1,6 +1,6 @@
 CC = riscv64-unknown-elf-gcc
 AR = riscv64-unknown-elf-ar
-LIB = libns550.a
+LIB = libxuartns550.a
 
 default: lib
 
@@ -41,7 +41,14 @@ lib: $(BUILD_DIR)/$(LIB)
 $(BUILD_DIR)/$(LIB): $(OBJ)
 	$(AR) rcs $(ARFLAGS) $@ $^
 
-install: lib
+INSTALL_LIBDIR ?= $(ISP_PREFIX)/local/lib/$(ARCH)/$(ABI)
+INSTALL_HEADERS=uartns550/xuartns550.h
+INSTALL_HDIR ?= $(ISP_PREFIX)/local/include
+install: $(BUILD_DIR)/$(LIB)
+	mkdir -p $(INSTALL_LIBDIR)
+	cp $^ $(INSTALL_LIBDIR)
+	mkdir -p $(INSTALL_HDIR)
+	cp $(INSTALL_HEADERS) $(INSTALL_HDIR)
 
 clean:
 	rm -rf build
