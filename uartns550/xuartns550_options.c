@@ -126,11 +126,13 @@ u16 XUartNs550_GetOptions(XUartNs550 *InstancePtr)
 	u32 Register;
 	u32 Index;
 
+#ifdef DEBUG
 	/*
 	 * Assert validates the input arguments
 	 */
 	Xil_AssertNonvoid(InstancePtr != NULL);
 	Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+#endif
 
 	/*
 	 * Loop thru the options table to map the physical options in the
@@ -191,11 +193,13 @@ int XUartNs550_SetOptions(XUartNs550 *InstancePtr, u16 Options)
 	u32 Index;
 	u32 Register;
 
+#ifdef DEBUG
 	/*
 	 * Assert validates the input arguments
 	 */
 	Xil_AssertNonvoid(InstancePtr != NULL);
 	Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+#endif
 
 	/*
 	 * Loop thru the options table to map the logical options to the
@@ -262,11 +266,13 @@ u8 XUartNs550_GetFifoThreshold(XUartNs550 *InstancePtr)
 {
 	u32 FcrRegister;
 
+#ifdef DEBUG
 	/*
 	 * Assert validates the input arguments
 	 */
 	Xil_AssertNonvoid(InstancePtr != NULL);
 	Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+#endif
 
 	/*
 	 * Read the value of the FIFO control register so that the threshold
@@ -306,6 +312,7 @@ int XUartNs550_SetFifoThreshold(XUartNs550 *InstancePtr, u8 TriggerLevel)
 {
 	u32 FcrRegister;
 
+#ifdef DEBUG
 	/*
 	 * Assert validates the input arguments
 	 */
@@ -315,6 +322,7 @@ int XUartNs550_SetFifoThreshold(XUartNs550 *InstancePtr, u8 TriggerLevel)
 			(TriggerLevel == XUN_FIFO_TRIGGER_04) ||
 			(TriggerLevel == XUN_FIFO_TRIGGER_01));
 	Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+#endif
 
 	/*
 	 * Read the value of the FIFO control register, this read takes special
@@ -376,10 +384,12 @@ u8 XUartNs550_GetLastErrors(XUartNs550 *InstancePtr)
 {
 	u8 Temp = InstancePtr->LastErrors;
 
+#ifdef DEBUG
 	/*
 	 * Assert validates the input arguments
 	 */
 	Xil_AssertNonvoid(InstancePtr != NULL);
+#endif
 
 	/*
 	 * Clear the last errors and return the previous value
@@ -419,10 +429,12 @@ u8 XUartNs550_GetModemStatus(XUartNs550 *InstancePtr)
 {
 	u32 ModemStatusRegister;
 
+#ifdef DEBUG
 	/*
 	 * Assert validates the input arguments
 	 */
 	Xil_AssertNonvoid(InstancePtr != NULL);
+#endif
 
 	/*
 	 * Read the modem status register to return
@@ -449,10 +461,12 @@ int XUartNs550_IsSending(XUartNs550 *InstancePtr)
 {
 	u32 LsrRegister;
 
+#ifdef DEBUG
 	/*
 	 * Assert validates the input arguments
 	 */
 	Xil_AssertNonvoid(InstancePtr != NULL);
+#endif
 
 	/*
 	 * Read the line status register to determine if the transmitter is

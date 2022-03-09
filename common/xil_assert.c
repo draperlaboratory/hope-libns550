@@ -127,8 +127,6 @@ void Xil_Assert(const char8 *File, s32 Line)
 *
 * @return   None.
 *
-* @note     This function has no effect if NDEBUG is set
-*
 ******************************************************************************/
 void Xil_AssertSetCallback(Xil_AssertCallback Routine)
 {

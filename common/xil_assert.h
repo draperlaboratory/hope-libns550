@@ -82,8 +82,6 @@ typedef void (*Xil_AssertCallback) (const char8 *File, s32 Line);
 
 /***************** Macros (Inline Functions) Definitions *********************/
 
-#ifndef NDEBUG
-
 /*****************************************************************************/
 /**
 * @brief    This assert macro is to be used for void functions. This in
@@ -166,16 +164,6 @@ typedef void (*Xil_AssertCallback) (const char8 *File, s32 Line);
    Xil_AssertStatus = XIL_ASSERT_OCCURRED;        \
    return 0;                                       \
 }
-
-
-#else
-
-#define Xil_AssertVoid(Expression)
-#define Xil_AssertVoidAlways()
-#define Xil_AssertNonvoid(Expression)
-#define Xil_AssertNonvoidAlways()
-
-#endif
 
 /************************** Function Prototypes ******************************/
 

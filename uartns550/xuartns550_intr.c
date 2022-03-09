@@ -207,10 +207,12 @@ static void NoInterruptHandler(XUartNs550 *InstancePtr)
 	 */
 	LsrRegister = XUartNs550_GetLineStatusReg(InstancePtr->BaseAddress);
 
+#ifdef DEBUG
 	/*
 	 * Update the stats to reflect any errors that might be read
 	 */
 	XUartNs550_UpdateStats(InstancePtr, (u8)LsrRegister);
+#endif
 }
 
 /****************************************************************************/
@@ -248,7 +250,9 @@ static void ReceiveStatusHandler(XUartNs550 *InstancePtr)
 		 */
 		LsrRegister =
 			XUartNs550_GetLineStatusReg(InstancePtr->BaseAddress);
+#ifdef DEBUG
 		XUartNs550_UpdateStats(InstancePtr, (u8)LsrRegister);
+#endif
 	}
 
 	/*
@@ -260,10 +264,12 @@ static void ReceiveStatusHandler(XUartNs550 *InstancePtr)
 				InstancePtr->ReceiveBuffer.RequestedBytes -
 				InstancePtr->ReceiveBuffer.RemainingBytes);
 
+#ifdef DEBUG
 	/*
 	 * Update the receive stats to reflect the receive interrupt
 	 */
 	InstancePtr->Stats.StatusInterrupts++;
+#endif
 }
 /****************************************************************************/
 /**
@@ -313,10 +319,12 @@ static void ReceiveTimeoutHandler(XUartNs550 *InstancePtr)
 			 InstancePtr->ReceiveBuffer.RequestedBytes -
 			 InstancePtr->ReceiveBuffer.RemainingBytes);
 
+#ifdef DEBUG
 	/*
 	 * Update the receive stats to reflect the receive interrupt
 	 */
 	InstancePtr->Stats.ReceiveInterrupts++;
+#endif
 }
 /****************************************************************************/
 /**
@@ -371,11 +379,12 @@ static void ReceiveDataHandler(XUartNs550 *InstancePtr)
 			 InstancePtr->ReceiveBuffer.RequestedBytes -
 			 InstancePtr->ReceiveBuffer.RemainingBytes);
 
-
+#ifdef DEBUG
 	/*
 	 * Update the receive stats to reflect the receive interrupt
 	 */
 	InstancePtr->Stats.ReceiveInterrupts++;
+#endif
 }
 
 /****************************************************************************/
@@ -424,10 +433,12 @@ static void SendDataHandler(XUartNs550 *InstancePtr)
 		XUartNs550_SendBuffer(InstancePtr);
 	}
 
+#ifdef DEBUG
 	/*
 	 * Update the transmit stats to reflect the transmit interrupt
 	 */
 	InstancePtr->Stats.TransmitInterrupts++;
+#endif
 }
 
 /****************************************************************************/
@@ -461,9 +472,11 @@ static void ModemHandler(XUartNs550 *InstancePtr)
 	InstancePtr->Handler(InstancePtr->CallBackRef, XUN_EVENT_MODEM,
 						 (u8) MsrRegister);
 
+#ifdef DEBUG
 	/*
 	 * Update the modem stats to reflect the modem interrupt
 	 */
 	InstancePtr->Stats.ModemInterrupts++;
+#endif
 }
 /** @} */

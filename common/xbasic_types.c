@@ -116,8 +116,6 @@ void XAssert(char *File, int Line)
 *
 * @return   None.
 *
-* @note     This function has no effect if NDEBUG is set
-*
 ******************************************************************************/
 void XAssertSetCallback(XAssertCallback Routine)
 {

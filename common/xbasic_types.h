@@ -100,8 +100,10 @@ extern "C" {
 #define XASSERT_NONE     0
 #define XASSERT_OCCURRED 1
 
+#ifdef DEBUG
 extern unsigned int XAssertStatus;
 extern void XAssert(char *, int);
+#endif
 
 /**************************** Type Definitions *******************************/
 
@@ -156,11 +158,13 @@ typedef void (*XInterruptHandler) (void *InstancePtr);
  */
 typedef void (*XExceptionHandler) (void *InstancePtr);
 
+#ifdef DEBUG
 /**
  * This data type defines a callback to be invoked when an
  * assert occurs. The callback is invoked only when asserts are enabled
  */
 typedef void (*XAssertCallback) (char *FilenamePtr, int LineNumber);
+#endif
 
 /***************** Macros (Inline Functions) Definitions *********************/
 
@@ -190,9 +194,7 @@ typedef void (*XAssertCallback) (char *FilenamePtr, int LineNumber);
 ******************************************************************************/
 #define XUINT64_LSW(x) ((x).Lower)
 
-
-#ifndef NDEBUG
-
+#ifdef DEBUG
 /*****************************************************************************/
 /**
 * This assert macro is to be used for functions that do not return anything
@@ -288,19 +290,11 @@ typedef void (*XAssertCallback) (char *FilenamePtr, int LineNumber);
    return 0;                                       \
 }
 
-
-#else
-
-#define XASSERT_VOID(expression)
-#define XASSERT_VOID_ALWAYS()
-#define XASSERT_NONVOID(expression)
-#define XASSERT_NONVOID_ALWAYS()
-#endif
-
 /************************** Function Prototypes ******************************/
 
 void XAssertSetCallback(XAssertCallback Routine);
 //void XNullHandler(void *NullParameter);
+#endif
 
 #ifdef __cplusplus
 }

@@ -65,7 +65,9 @@ extern "C" {
 /***************************** Include Files *********************************/
 
 #include "xil_types.h"
+#ifdef DEBUG
 #include "xil_assert.h"
+#endif
 #include "xil_io.h"
 
 /************************** Constant Definitions *****************************/

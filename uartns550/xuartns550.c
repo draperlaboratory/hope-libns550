@@ -140,10 +140,12 @@ int XUartNs550_CfgInitialize(XUartNs550 *InstancePtr,
 	int Status;
 	u32 BaudRate;
 
+#ifdef DEBUG
 	/*
 	 * Assert validates the input arguments
 	 */
 	Xil_AssertNonvoid(InstancePtr != NULL);
+#endif
 
 	/*
 	 * Setup the data that is from the configuration information
@@ -193,6 +195,7 @@ int XUartNs550_CfgInitialize(XUartNs550 *InstancePtr,
 	XUartNs550_SetLineControlReg(InstancePtr->BaseAddress,
 						XUN_FORMAT_8_BITS);
 
+#ifdef DEBUG
 	/*
 	 * Enable the FIFOs assuming they are present and set the receive FIFO
 	 * trigger level for 8 bytes assuming that this will work best with most
@@ -208,6 +211,7 @@ int XUartNs550_CfgInitialize(XUartNs550 *InstancePtr,
 	 * Clear the statistics for this driver
 	 */
 	XUartNs550_ClearStats(InstancePtr);
+#endif
 
 	return XST_SUCCESS;
 }
@@ -254,6 +258,7 @@ unsigned int XUartNs550_Send(XUartNs550 *InstancePtr, u8 *BufferPtr,
 	unsigned int BytesSent;
 	u32 IerRegister;
 
+#ifdef DEBUG
 	/*
 	 * Assert validates the input arguments
 	 */
@@ -261,6 +266,7 @@ unsigned int XUartNs550_Send(XUartNs550 *InstancePtr, u8 *BufferPtr,
 	Xil_AssertNonvoid(BufferPtr != NULL);
 	Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
 	Xil_AssertNonvoid(((signed)NumBytes) >= 0);
+#endif
 
 	/*
 	 * Enter a critical region by disabling the UART transmit interrupts to
@@ -336,6 +342,7 @@ unsigned int XUartNs550_Recv(XUartNs550 *InstancePtr, u8 *BufferPtr,
 	unsigned int ReceivedCount;
 	u32 IerRegister;
 
+#ifdef DEBUG
 	/*
 	 * Assert validates the input arguments
 	 */
@@ -343,6 +350,7 @@ unsigned int XUartNs550_Recv(XUartNs550 *InstancePtr, u8 *BufferPtr,
 	Xil_AssertNonvoid(BufferPtr != NULL);
 	Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
 	Xil_AssertNonvoid(((signed)NumBytes) >= 0);
+#endif
 
 	/*
 	 * Enter a critical region by disabling all the UART interrupts to allow
@@ -485,10 +493,12 @@ unsigned int XUartNs550_SendBuffer(XUartNs550 *InstancePtr)
 	InstancePtr->SendBuffer.NextBytePtr += SentCount;
 	InstancePtr->SendBuffer.RemainingBytes -= SentCount;
 
+#ifdef DEBUG
 	/*
 	 * Increment associated counters
 	 */
 	 InstancePtr->Stats.CharactersTransmitted += SentCount;
+#endif
 
 	/*
 	 * If interrupts are enabled as indicated by the receive interrupt, then
@@ -566,7 +576,9 @@ unsigned int XUartNs550_ReceiveBuffer(XUartNs550 *InstancePtr)
 		if (LsrRegister & XUN_LSR_BREAK_INT) {
 			(void)XUartNs550_ReadReg(InstancePtr->BaseAddress,
 							XUN_RBR_OFFSET);
+#ifdef DEBUG
 			XUartNs550_UpdateStats(InstancePtr, (u8)LsrRegister);
+#endif
 		}
 
 		/*
@@ -578,8 +590,9 @@ unsigned int XUartNs550_ReceiveBuffer(XUartNs550 *InstancePtr)
 			InstancePtr->ReceiveBuffer.NextBytePtr[ReceivedCount++] =
 			XUartNs550_ReadReg(InstancePtr->BaseAddress,
 						XUN_RBR_OFFSET);
-
+#ifdef DEBUG
 			XUartNs550_UpdateStats(InstancePtr, (u8)LsrRegister);
+#endif
 		}
 
 		/*
@@ -598,10 +611,12 @@ unsigned int XUartNs550_ReceiveBuffer(XUartNs550 *InstancePtr)
 	InstancePtr->ReceiveBuffer.NextBytePtr += ReceivedCount;
 	InstancePtr->ReceiveBuffer.RemainingBytes -= ReceivedCount;
 
+#ifdef DEBUG
 	/*
 	 * Increment associated counters in the statistics
 	 */
 	InstancePtr->Stats.CharactersReceived += ReceivedCount;
+#endif
 
 	return ReceivedCount;
 }
@@ -640,11 +655,13 @@ int XUartNs550_SetBaudRate(XUartNs550 *InstancePtr, u32 BaudRate)
 	u32 Error;
 	u32 PercentError;
 
+#ifdef DEBUG
 	/*
 	 * Assert validates the input arguments
 	 */
 	Xil_AssertNonvoid(InstancePtr != NULL);
 	Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+#endif
 
 	/*
 	 * Determine what the divisor should be to get the specified baud
@@ -744,9 +761,11 @@ static void XUartNs550_StubHandler(void *CallBackRef, u32 Event,
 	(void) Event;
 	(void) ByteCount;
 
+#ifdef DEBUG
 	/*
 	 * Assert occurs always since this is a stub and should never be called
 	 */
 	Xil_AssertVoidAlways();
+#endif
 }
 /** @} */

@@ -110,8 +110,10 @@ int XUartNs550_SetDataFormat(XUartNs550 *InstancePtr,
 	int Status;
 	u32 LcrRegister;
 
+#ifdef DEBUG
 	Xil_AssertNonvoid(InstancePtr != NULL);
 	Xil_AssertNonvoid(FormatPtr != NULL);
+#endif
 
 	/*
 	 * Verify the inputs specified are valid and return an error if any
@@ -209,6 +211,7 @@ void XUartNs550_GetDataFormat(XUartNs550 *InstancePtr,
 {
 	u32 LcrRegister;
 
+#ifdef DEBUG
 	Xil_AssertVoid(InstancePtr != NULL);
 	Xil_AssertVoid(FormatPtr != NULL);
 
@@ -217,6 +220,7 @@ void XUartNs550_GetDataFormat(XUartNs550 *InstancePtr,
 	 */
 	Xil_AssertVoid(InstancePtr != NULL);
 	Xil_AssertVoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+#endif
 
 	/*
 	 * Get the baud rate from the instance, this is not retrieved from the

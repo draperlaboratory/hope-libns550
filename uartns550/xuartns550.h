@@ -184,7 +184,9 @@ extern "C" {
 /***************************** Include Files ********************************/
 
 #include "xil_types.h"
+#ifdef DEBUG
 #include "xil_assert.h"
+#endif
 #include "xstatus.h"
 #include "xuartns550_l.h"
 
@@ -359,6 +361,7 @@ typedef struct {
 typedef void (*XUartNs550_Handler)(void *CallBackRef, u32 Event,
 					unsigned int EventData);
 
+#ifdef DEBUG
 /**
  * UART statistics
  */
@@ -374,6 +377,7 @@ typedef struct {
 	u16 ReceiveFramingErrors;	/**< Number of receive framing errors */
 	u16 ReceiveBreakDetected;	/**< Number of receive breaks */
 } XUartNs550Stats;
+#endif
 
 /**
  * The XUartNs550 driver instance data. The user is required to allocate a
@@ -382,7 +386,9 @@ typedef struct {
  * functions.
  */
 typedef struct {
+#ifdef DEBUG
 	XUartNs550Stats Stats;	/**< Statistics */
+#endif
 	UINTPTR BaseAddress;	/**< Base address of device  */
 	u32 InputClockHz;	/**< Input clock frequency */
 	int IsReady;		/**< Device is initialized and ready */
@@ -442,6 +448,7 @@ void XUartNs550_SetHandler(XUartNs550 *InstancePtr, XUartNs550_Handler FuncPtr,
 
 void XUartNs550_InterruptHandler(XUartNs550 *InstancePtr);
 
+#ifdef DEBUG
 /*
  * Statistics functions in xuartns550_stats.c
  */
@@ -452,6 +459,7 @@ void XUartNs550_ClearStats(XUartNs550 *InstancePtr);
  * Self-test functions in xuartns550_selftest.c
  */
 int XUartNs550_SelfTest(XUartNs550 *InstancePtr);
+#endif
 
 #ifdef __cplusplus
 }

@@ -74,7 +74,7 @@ extern "C" {
 
 /***************** Macros (Inline Functions) Definitions *********************/
 
-
+#ifdef DEBUG
 /****************************************************************************
 *
 * This macro updates the status based upon a specified line status register
@@ -111,6 +111,7 @@ extern "C" {
 		InstancePtr->Stats.ReceiveBreakDetected++;	\
 	}							\
 }
+#endif
 
 /************************** Function Prototypes ******************************/
 
