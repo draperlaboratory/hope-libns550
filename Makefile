@@ -42,8 +42,8 @@ $(BUILD_DIR)/$(LIB): $(OBJ)
 	$(AR) rcs $(ARFLAGS) $@ $^
 
 INSTALL_LIBDIR ?= $(ISP_PREFIX)/local/lib/$(ARCH)/$(ABI)
-INSTALL_HEADERS=uartns550/xuartns550.h
-INSTALL_HDIR ?= $(ISP_PREFIX)/local/include
+INSTALL_HEADERS=common/xil_types.h common/xil_io.h common/xil_assert.h common/xbasic_types.h common/xstatus.h uartns550/xuartns550_l.h uartns550/xuartns550.h
+INSTALL_HDIR ?= $(ISP_PREFIX)/local/include/xuartns550
 install: $(BUILD_DIR)/$(LIB)
 	mkdir -p $(INSTALL_LIBDIR)
 	cp $^ $(INSTALL_LIBDIR)
