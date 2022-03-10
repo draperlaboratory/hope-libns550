@@ -53,6 +53,8 @@
 #ifndef XIL_ASSERT_H	/* prevent circular inclusions */
 #define XIL_ASSERT_H	/* by using protection macros */
 
+#ifdef DEBUG
+
 #include "xil_types.h"
 
 #ifdef __cplusplus
@@ -171,6 +173,8 @@ void Xil_AssertSetCallback(Xil_AssertCallback Routine);
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif
 
 #endif	/* end of protection macro */
