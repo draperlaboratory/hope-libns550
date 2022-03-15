@@ -42,7 +42,8 @@ OBJ=$(COMMON_OBJ) $(UART_OBJ)
 CFLAGS += -nostartfiles \
           -fdata-sections \
           -ffunction-sections \
-		  -fno-builtin-printf
+		  -fno-builtin-printf \
+		  -mcmodel=medany
 ifdef DEBUG
 CFLAGS += -g -DDEBUG
 endif
@@ -57,7 +58,7 @@ $(BUILD_DIR)/$(LIB): $(OBJ)
 
 INSTALL_LIBDIR ?= $(ISP_PREFIX)/local/lib/$(ARCH)/$(ABI)
 INSTALL_HEADERS=common/xil_types.h common/xil_io.h common/xbasic_types.h common/xstatus.h uartns550/xuartns550_l.h uartns550/xuartns550.h common/xil_assert.h
-INSTALL_HDIR ?= $(ISP_PREFIX)/local/include/xuartns550
+INSTALL_HDIR ?= $(ISP_PREFIX)/local/include
 install: $(BUILD_DIR)/$(LIB)
 	mkdir -p $(INSTALL_LIBDIR)
 	cp $^ $(INSTALL_LIBDIR)
