@@ -67,3 +67,5 @@ install: $(BUILD_DIR)/$(LIB)
 
 clean:
 	rm -rf build
+
+.PHONY: clean default install lib
