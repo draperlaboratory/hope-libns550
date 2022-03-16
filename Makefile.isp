@@ -1,0 +1,26 @@
+RISCV_GCC ?= riscv64-unknown-elf-gcc
+
+multilib=$(foreach lib,$(shell $(RISCV_GCC) --print-multi-lib),$(shell echo "$(lib)" | sed -rn 's/(rv(32|64)\w+\/i?lp(32|64)(d|f)?).*/\1/p'))
+
+all: build
+
+define BUILD_rule
+
+$(1)/$(2):
+	$(MAKE) ARCH=$(1) ABI=$(2) lib
+
+install-$(1)/$(2):
+	$(MAKE) ARCH=$(1) ABI=$(2) install
+
+endef
+
+$(foreach arch,$(multilib),$(eval $(call BUILD_rule,$(shell echo "$(arch)" | sed -rn 's/\/.+//p'),$(shell echo "$(arch)" | sed -rn 's/.+\///p'))))
+
+build: $(multilib)
+
+install: $(foreach lib,$(multilib),install-$(lib))
+
+clean:
+	$(MAKE) clean
+
+.PHONY: $(multilib) all build clean install
